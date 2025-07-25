@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers | Khairat Al-Quds Supermarket</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="logo.jpg">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #f7f7f7;
+            color: #222;
+        }
+        header {
+            background: #c0653b;
+            color: #fff;
+            padding: 20px 0;
+        }
+        nav {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 6px 10px;
+            font-size: 1em;
+            font-weight: 500;
+        }
+        .offers-grid {
+            max-width: 1100px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .offer-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .offer-card img {
+            width: 100%;
+            max-width: 180px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: transform 0.3s cubic-bezier(.4,2,.3,1), box-shadow 0.3s;
+            object-fit: cover;
+            aspect-ratio: 1/1;
+        }
+        .offer-card:hover img {
+            transform: scale(1.08) rotate(-2deg);
+            box-shadow: 0 8px 24px rgba(44, 62, 80, 0.15);
+        }
+        .offer-card h3 {
+            margin: 10px 0 5px;
+            font-size: 1.2em;
+        }
+        .offer-card .old-price {
+            color: #888;
+            text-decoration: line-through;
+            font-size: 1em;
+            margin-right: 10px;
+        }
+        .offer-card .new-price {
+            color: #c0653b;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .offer-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px; /* changed from left to right */
+            background: #c0653b;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            font-weight: bold;
+        }
+        .product-number {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #c0653b;
+            color: #fff;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            z-index: 2;
+        }
+        @media (max-width: 600px) {
+            .offers-grid { grid-template-columns: 1fr; }
+        }
+        footer {
+            background: #222;
+            color: #fff;
+            text-align: center;
+            padding: 25px 0 10px;
+            margin-top: 40px;
+        }
+        /* Modal styles */
+        #image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        #close-modal {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            font-size: 2.5em;
+            color: #fff;
+            cursor: pointer;
+            z-index: 10001;
+        }
+        #modal-img {
+            max-width: 80vw;
+            max-height: 80vh;
+        }
+        /* Add or update in your <style> section on every page */
+        .products-grid, .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 10px;
+        }
+        @media (max-width: 600px) {
+            .products-grid, .offers-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin: 20px 0;
+                padding: 0 5px;
+            }
+            header, footer {
+                padding: 16px 0 8px;
+            }
+            .product-card img, .offer-card img {
+                max-width: 100%;
+                aspect-ratio: 1/1;
+            }
+            nav {
+                font-size: 1em;
+                flex-wrap: wrap;
+            }
+            h1, h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin: 0 auto;">
+            <div style="display: flex; align-items: center;">
+                <img src="logo.jpg" alt="Khairat Al-Quds Logo" style="height:60px; margin-right:18px;">
+                <h2 style="margin:0; font-size:2em;">Khairat Al-Quds Supermarket</h2>
+            </div>
+            <nav style="font-size:1.15em;">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="products.html"><i class="fas fa-shopping-basket"></i> Products</a>
+                <a href="offers.html"><i class="fas fa-tags"></i> Offers</a>
+                <a href="contacts.html"><i class="fas fa-envelope"></i> Contact</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <h1 style="text-align:center; margin-top:40px;">Special Offers</h1>
+        <section class="offers-grid">
+            <div class="offer-card">
+                <span class="product-number">1</span>
+                <span class="offer-badge">Save 20%</span>
+                <img src="posts/items/1.jpg" alt="Product 1">
+                <div>
+                    <span class="old-price">12.49 JD</span>
+                    <span class="new-price">9.99 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">2</span>
+                <span class="offer-badge">Save 15%</span>
+                <img src="posts/items/2.jpg" alt="Product 2">
+                <div>
+                    <span class="old-price">5.89 JD</span>
+                    <span class="new-price">4.99 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">3</span>
+                <span class="offer-badge">Save 11%</span>
+                <img src="posts/items/3.jpg" alt="Product 3">
+                <div>
+                    <span class="old-price">8.99 JD</span>
+                    <span class="new-price">7.99 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">4</span>
+                <span class="offer-badge">Save 25%</span>
+                <img src="posts/items/4.jpg" alt="Product 4">
+                <div>
+                    <span class="old-price">7.99 JD</span>
+                    <span class="new-price">5.99 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">5</span>
+                <span class="offer-badge">Save 20%</span>
+                <img src="posts/items/5.jpg" alt="Product 5">
+                <div>
+                    <span class="old-price">4.99 JD</span>
+                    <span class="new-price">3.99 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">6</span>
+                <span class="offer-badge">Save 15%</span>
+                <img src="posts/items/6.jpg" alt="Product 6">
+                <div>
+                    <span class="old-price">8.19 JD</span>
+                    <span class="new-price">6.99 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">7</span>
+                <span class="offer-badge">Save 13%</span>
+                <img src="posts/items/7.jpg" alt="Product 7">
+                <div>
+                    <span class="old-price">3.39 JD</span>
+                    <span class="new-price">2.99 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">8</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/8.jpg" alt="Product 8">
+                <div>
+                    <span class="old-price">9.99 JD</span>
+                    <span class="new-price">8.99 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">9</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/9.jpg" alt="Product 9">
+                <div>
+                    <span class="old-price">4.99 JD</span>
+                    <span class="new-price">4.49 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">10</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/10.jpg" alt="Product 10">
+                <div>
+                    <span class="old-price">6.09 JD</span>
+                    <span class="new-price">5.49 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">11</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/11.jpg" alt="Product 11">
+                <div>
+                    <span class="old-price">3.69 JD</span>
+                    <span class="new-price">3.29 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">12</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/12.jpg" alt="Product 12">
+                <div>
+                    <span class="old-price">2.49 JD</span>
+                    <span class="new-price">2.19 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">13</span>
+                <span class="offer-badge">Save 13%</span>
+                <img src="posts/items/13.jpg" alt="Product 13">
+                <div>
+                    <span class="old-price">7.99 JD</span>
+                    <span class="new-price">6.99 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">14</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/14.jpg" alt="Product 14">
+                <div>
+                    <span class="old-price">1.69 JD</span>
+                    <span class="new-price">1.49 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">15</span>
+                <span class="offer-badge">Save 18%</span>
+                <img src="posts/items/15.jpg" alt="Product 15">
+                <div>
+                    <span class="old-price">10.99 JD</span>
+                    <span class="new-price">8.99 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">16</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/16.jpg" alt="Product 16">
+                <div>
+                    <span class="old-price">3.09 JD</span>
+                    <span class="new-price">2.79 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">17</span>
+                <span class="offer-badge">Save 15%</span>
+                <img src="posts/items/17.jpg" alt="Product 17">
+                <div>
+                    <span class="old-price">4.99 JD</span>
+                    <span class="new-price">4.19 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">18</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/18.jpg" alt="Product 18">
+                <div>
+                    <span class="old-price">3.99 JD</span>
+                    <span class="new-price">3.59 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">19</span>
+                <span class="offer-badge">Save 15%</span>
+                <img src="posts/items/19.jpg" alt="Product 19">
+                <div>
+                    <span class="old-price">6.29 JD</span>
+                    <span class="new-price">5.29 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">20</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/20.jpg" alt="Product 20">
+                <div>
+                    <span class="old-price">2.69 JD</span>
+                    <span class="new-price">2.39 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">21</span>
+                <span class="offer-badge">Save 15%</span>
+                <img src="posts/items/21.jpg" alt="Product 21">
+                <div>
+                    <span class="old-price">8.79 JD</span>
+                    <span class="new-price">7.49 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">22</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/22.jpg" alt="Product 22">
+                <div>
+                    <span class="old-price">3.59 JD</span>
+                    <span class="new-price">3.19 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">23</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/23.jpg" alt="Product 23">
+                <div>
+                    <span class="old-price">6.99 JD</span>
+                    <span class="new-price">6.29 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">24</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/24.jpg" alt="Product 24">
+                <div>
+                    <span class="old-price">1.99 JD</span>
+                    <span class="new-price">1.79 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">25</span>
+                <span class="offer-badge">Save 15%</span>
+                <img src="posts/items/25.jpg" alt="Product 25">
+                <div>
+                    <span class="old-price">5.49 JD</span>
+                    <span class="new-price">4.69 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">26</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/26.jpg" alt="Product 26">
+                <div>
+                    <span class="old-price">5.79 JD</span>
+                    <span class="new-price">5.19 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">27</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/27.jpg" alt="Product 27">
+                <div>
+                    <span class="old-price">3.19 JD</span>
+                    <span class="new-price">2.89 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">28</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/28.jpg" alt="Product 28">
+                <div>
+                    <span class="old-price">4.29 JD</span>
+                    <span class="new-price">3.89 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">29</span>
+                <span class="offer-badge">Save 15%</span>
+                <img src="posts/items/29.jpg" alt="Product 29">
+                <div>
+                    <span class="old-price">7.99 JD</span>
+                    <span class="new-price">6.79 JD</span>
+                </div>
+            </div>
+            <div class="offer-card">
+                <span class="product-number">30</span>
+                <span class="offer-badge">Save 10%</span>
+                <img src="posts/items/30.jpg" alt="Product 30">
+                <div>
+                    <span class="old-price">8.29 JD</span>
+                    <span class="new-price">7.49 JD</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        &copy; 2025 Khairat Al-Quds Supermarket. All rights reserved.
+    </footer>
+    <div id="image-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:9999; align-items:center; justify-content:center;">
+        <span id="close-modal" style="position:absolute; top:40px; right:60px; font-size:2.5em; color:#fff; cursor:pointer; z-index:10001;">&times;</span>
+        <img id="modal-img" src="" alt="Preview" style="max-width:80vw; max-height:80vh; border-radius:12px; box-shadow:0 4px 32px rgba(0,0,0,0.25);">
+    </div>
+    <script>
+    document.querySelectorAll('.offer-card img').forEach(img => {
+        img.style.cursor = 'pointer';
+        img.onclick = function() {
+            document.getElementById('modal-img').src = this.src;
+            document.getElementById('image-modal').style.display = 'flex';
+        };
+    });
+    document.getElementById('close-modal').onclick = function() {
+        document.getElementById('image-modal').style.display = 'none';
+    };
+    document.getElementById('image-modal').onclick = function(e) {
+        if(e.target === this) this.style.display = 'none';
+    };
+    </script>
+</body>
+</html>

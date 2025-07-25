@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Khairat Al-Quds Supermarket</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="logo.jpg">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #f7f7f7;
+            color: #222;
+        }
+        header {
+            background: #c0653b;
+            color: #fff;
+            padding: 20px 0;
+        }
+        nav {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        nav a {
+            margin: 6px 10px;
+            font-size: 1em;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .products-grid, .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 10px;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-card img {
+            width: 100%;
+            max-width: 160px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: transform 0.3s cubic-bezier(.4,2,.3,1), box-shadow 0.3s;
+        }
+        .product-card:hover img {
+            transform: scale(1.08) rotate(-2deg);
+            box-shadow: 0 8px 24px rgba(44, 62, 80, 0.15);
+        }
+        .product-number {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #c0653b;
+            color: #fff;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            z-index: 2;
+        }
+        .price {
+            color: #2d7c3f;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+        @media (max-width: 600px) {
+            .products-grid, .offers-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin: 20px 0;
+                padding: 0 5px;
+            }
+            header, footer {
+                padding: 16px 0 8px;
+            }
+            .product-card img, .offer-card img {
+                max-width: 100%;
+                aspect-ratio: 1/1;
+            }
+            nav {
+                font-size: 1em;
+                flex-wrap: wrap;
+            }
+            h1, h2 {
+                font-size: 1.5em;
+            }
+        }
+        footer {
+            background: #222;
+            color: #fff;
+            text-align: center;
+            padding: 25px 0 10px;
+            margin-top: 40px;
+        }
+        #image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        #close-modal {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            font-size: 2.5em;
+            color: #fff;
+            cursor: pointer;
+            z-index: 10001;
+        }
+        #modal-img {
+            max-width: 80vw;
+            max-height: 80vh;
+        }
+        #image-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <header style="background: #c0653b; color: #fff; padding: 20px 0;">
+        <div style="display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin: 0 auto;">
+            <div style="display: flex; align-items: center;">
+                <img src="logo.jpg" alt="Khairat Al-Quds Logo" style="height:60px; margin-right:18px;">
+                <h2 style="margin:0; font-size:2em;">Khairat Al-Quds Supermarket</h2>
+            </div>
+            <nav style="font-size:1.15em;">
+                <a href="index.html" style="color:#fff; text-decoration:none; margin:0 15px;"><i class="fas fa-home"></i> Home</a>
+                <a href="products.html" style="color:#fff; text-decoration:none; margin:0 15px;"><i class="fas fa-shopping-basket"></i> Products</a>
+                <a href="offers.html" style="color:#fff; text-decoration:none; margin:0 15px;"><i class="fas fa-tags"></i> Offers</a>
+                <a href="contacts.html" style="color:#fff; text-decoration:none; margin:0 15px;"><i class="fas fa-envelope"></i> Contact</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <h1 style="text-align:center; margin-top:40px;">Our Products</h1>
+        <section class="products-grid">
+            <div class="product-card">
+                <span class="product-number">1</span>
+                <img src="posts/items/1.jpg" alt="Product 1">
+                <div class="price">$4.99</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">2</span>
+                <img src="posts/items/2.jpg" alt="Product 2">
+                <div class="price">$3.49</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">3</span>
+                <img src="posts/items/3.jpg" alt="Product 3">
+                <div class="price">$2.99</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">4</span>
+                <img src="posts/items/4.jpg" alt="Product 4">
+                <div class="price">$5.99</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">5</span>
+                <img src="posts/items/5.jpg" alt="Product 5">
+                <div class="price">$1.99</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">6</span>
+                <img src="posts/items/6.jpg" alt="Product 6">
+                <div class="price">$6.49</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">7</span>
+                <img src="posts/items/7.jpg" alt="Product 7">
+                <div class="price">$3.99</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">8</span>
+                <img src="posts/items/8.jpg" alt="Product 8">
+                <div class="price">$2.49</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">9</span>
+                <img src="posts/items/9.jpg" alt="Product 9">
+                <div class="price">$7.99</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">10</span>
+                <img src="posts/items/10.jpg" alt="Product 10">
+                <div class="price">$4.49</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">11</span>
+                <img src="posts/items/11.jpg" alt="Product 11">
+                <div class="price">$5.49</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">12</span>
+                <img src="posts/items/12.jpg" alt="Product 12">
+                <div class="price">$3.29</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">13</span>
+                <img src="posts/items/13.jpg" alt="Product 13">
+                <div class="price">$2.19</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">14</span>
+                <img src="posts/items/14.jpg" alt="Product 14">
+                <div class="price">$6.99</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">15</span>
+                <img src="posts/items/15.jpg" alt="Product 15">
+                <div class="price">$1.49</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">16</span>
+                <img src="posts/items/16.jpg" alt="Product 16">
+                <div class="price">$8.99</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">17</span>
+                <img src="posts/items/17.jpg" alt="Product 17">
+                <div class="price">$2.79</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">18</span>
+                <img src="posts/items/18.jpg" alt="Product 18">
+                <div class="price">$4.19</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">19</span>
+                <img src="posts/items/19.jpg" alt="Product 19">
+                <div class="price">$3.59</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">20</span>
+                <img src="posts/items/20.jpg" alt="Product 20">
+                <div class="price">$5.29</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">21</span>
+                <img src="posts/items/21.jpg" alt="Product 21">
+                <div class="price">$2.39</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">22</span>
+                <img src="posts/items/22.jpg" alt="Product 22">
+                <div class="price">$7.49</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">23</span>
+                <img src="posts/items/23.jpg" alt="Product 23">
+                <div class="price">$3.19</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">24</span>
+                <img src="posts/items/24.jpg" alt="Product 24">
+                <div class="price">$6.29</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">25</span>
+                <img src="posts/items/25.jpg" alt="Product 25">
+                <div class="price">$1.79</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">26</span>
+                <img src="posts/items/26.jpg" alt="Product 26">
+                <div class="price">$4.69</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">27</span>
+                <img src="posts/items/27.jpg" alt="Product 27">
+                <div class="price">$5.19</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">28</span>
+                <img src="posts/items/28.jpg" alt="Product 28">
+                <div class="price">$2.89</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">29</span>
+                <img src="posts/items/29.jpg" alt="Product 29">
+                <div class="price">$3.89</div>
+            </div>
+            <div class="product-card">
+                <span class="product-number">30</span>
+                <img src="posts/items/30.jpg" alt="Product 30">
+                <div class="price">$6.79</div>
+            </div>
+        </section>
+    </main>
+    <div id="image-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:9999; align-items:center; justify-content:center;">
+        <span id="close-modal" style="position:absolute; top:40px; right:60px; font-size:2.5em; color:#fff; cursor:pointer; z-index:10001;">&times;</span>
+        <img id="modal-img" src="" alt="Preview" style="max-width:80vw; max-height:80vh; border-radius:12px; box-shadow:0 4px 32px rgba(0,0,0,0.25);">
+    </div>
+    <footer>
+        &copy; 2025 Khairat Al-Quds Supermarket. All rights reserved.
+    </footer>
+    <script>
+        document.querySelectorAll('.product-card img').forEach(img => {
+            img.style.cursor = 'pointer';
+            img.onclick = function() {
+                document.getElementById('modal-img').src = this.src;
+                document.getElementById('image-modal').style.display = 'flex';
+            };
+        });
+        document.getElementById('close-modal').onclick = function() {
+            document.getElementById('image-modal').style.display = 'none';
+        };
+        document.getElementById('image-modal').onclick = function(e) {
+            if(e.target === this) this.style.display = 'none';
+        };
+    </script>
+</body>
+</html>
