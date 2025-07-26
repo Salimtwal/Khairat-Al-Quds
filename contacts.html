@@ -123,6 +123,16 @@
             margin: 40px auto;
             padding: 0 10px;
         }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2em;
+            cursor: pointer;
+            margin-left: auto;
+            margin-right: 10px;
+        }
         @media (max-width: 600px) {
             .products-grid, .offers-grid {
                 grid-template-columns: 1fr;
@@ -156,15 +166,26 @@
                 width: 100%;
                 margin-bottom: 10px;
             }
+            .menu-toggle {
+                display: block;
+            }
             nav {
+                display: none;
+                flex-direction: column;
                 width: 100%;
-                justify-content: flex-start;
-                gap: 8px;
-                font-size: 1.1em;
+                background: #b05a2c;
+                border-radius: 0 0 8px 8px;
+                margin-top: 0;
+                padding: 0 0 10px 0;
+            }
+            nav.open {
+                display: flex;
             }
             nav a {
                 display: block;
-                padding: 10px 0;
+                padding: 12px 0 12px 18px;
+                border-radius: 0;
+                font-size: 1.1em;
             }
         }
         @media (max-width: 480px) {
@@ -187,7 +208,10 @@
                 <img src="logo.jpg" alt="Khairat Al-Quds Logo">
                 <h2 style="margin:0;">Khairat Al-Quds Supermarket</h2>
             </div>
-            <nav>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="main-nav">
                 <a href="index.html"><i class="fas fa-home"></i> Home</a>
                 <a href="products.html"><i class="fas fa-shopping-basket"></i> Products</a>
                 <a href="offers.html"><i class="fas fa-tags"></i> Offers</a>
@@ -222,5 +246,13 @@
     <footer>
         &copy; 2025 Khairat Al-Quds Supermarket. All rights reserved.
     </footer>
+    <script>
+        // Hamburger menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const nav = document.getElementById('main-nav');
+        menuToggle.addEventListener('click', function() {
+            nav.classList.toggle('open');
+        });
+    </script>
 </body>
 </html>
